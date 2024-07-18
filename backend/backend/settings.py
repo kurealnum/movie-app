@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "accounts",
+    "movies",
 ]
 
 MIDDLEWARE = [
@@ -91,7 +93,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "rdi_database",
+        "NAME": "MyAwesomeDatabaseName",
         "USER": environ.get("DB_USERNAME"),
         "PASSWORD": environ.get("DB_PASSWORD"),
         "HOST": "postgres",
