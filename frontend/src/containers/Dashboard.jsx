@@ -1,10 +1,13 @@
 import { useState } from "react";
 import getCookie from "../features/helpers";
 import ErrorMessage from "../components/ErrorMessage";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [title, setTitle] = useState();
   const [isError, setIsError] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
 
   function saveMovieHandler(title) {
     const response = saveMovie(title);
@@ -20,20 +23,28 @@ function Dashboard() {
   function getMoviesHandler() {
     const response = getMovies();
     response.then((result) => {
-      console.log(result["movies"]);
+      setMovies(result["movies"]);
     });
   }
 
   return (
     <>
       <input onChange={(e) => setTitle(e.target.value)}></input>
-      <button onClick={() => saveMovieHandler(title)}></button>
+      <button onClick={() => saveMovieHandler(title)}>
+        Save a movie title
+      </button>
       <ErrorMessage
         message={"There was an error saving the movie!"}
         altMessage={""}
         isError={isError}
       />
       <button onClick={() => getMoviesHandler()}>View Saved Movies</button>
+      <div className="movies">
+        {movies.map((movie_info) => (
+          <p key={movie_info["id"]}>{movie_info["title"]}</p>
+        ))}
+      </div>
+      <button onClick={() => navigate("/logout")}>Log out</button>
     </>
   );
 }
