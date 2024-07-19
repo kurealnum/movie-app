@@ -1,11 +1,12 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Movie
+import json
 
 
 @api_view(["POST"])
 def save_movie(request):
-    data = request.POST
+    data = request.data
     title = data["title"]
 
     saved_movie = Movie.objects.create(title=title)
@@ -16,5 +17,8 @@ def save_movie(request):
         return Response({"error": "something went wrong"}, status=400)
 
 
-def get_movies():
-    pass
+@api_view(["GET"])
+def get_movies(request):  # type:ignore
+    movies = Movie.objects.values()
+
+    return Response({"movies": movies})
