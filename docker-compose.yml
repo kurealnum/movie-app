@@ -1,7 +1,7 @@
 services:
     postgres:
         image: postgres:latest
-        container_name: mini-hackathon-3-postgres
+        container_name: movie-app-postgres
         environment: 
             - POSTGRES_DB=${DATABASE_NAME}
             - POSTGRES_USER=${DATABASE_USER}
@@ -9,10 +9,10 @@ services:
         expose:
             - '5432:5432'
         volumes:
-            - mini-hackathon-3-pg_data:/var/lib/postgresql/data
+            - movie-app-pg_data:/var/lib/postgresql/data
 
     frontend:
-        container_name: mini-hackathon-3-frontend
+        container_name: movie-app-frontend
         build:
             context: ./frontend
             dockerfile: ./Dockerfile
@@ -27,7 +27,7 @@ services:
                     - node_modules/
 
     backend:
-        container_name: mini-hackathon-3-backend
+        container_name: movie-app-backend
         build: 
             context: ./backend
             dockerfile: ./Dockerfile
@@ -42,7 +42,7 @@ services:
                   target: /backend_src
 
     nginx:
-        container_name: mini-hackathon-3-nginx
+        container_name: movie-app-nginx
         build: 
             context: ./nginx
             dockerfile: ./Dockerfile
@@ -52,4 +52,4 @@ services:
             - "backend"
 
 volumes:
-    mini-hackathon-3-pg_data:
+    movie-app-pg_data:
